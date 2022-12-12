@@ -1,7 +1,10 @@
 # 2023-Gregory
+
 The code which runs on our testing chassis named Gregory.
 
-### Current Code Status
-    The robot is currently configured to run a program for Middle School Outreach. 
-    No commands, or teleop mode.
-    Only code is in auto. 
+  
+
+### Branches
+| main |2023-middle-school-thingy  |
+|--|--|
+| contains nothing as of right now, but will be updated with latest code running on gregory | contains the code which is used for for the middle school outreach thing. does not have commands, teleop, and only code is in auto  |
