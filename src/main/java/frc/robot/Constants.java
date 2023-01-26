@@ -16,5 +16,15 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int driverControllerPort = 0;
   }
+
+  public static class PIDConstants {
+    public static final double kp = 0.024;
+    public static final double ki = 0.096;
+    public static final double kd = 0.0025;
+
+    public static final double Xkp = 0.3;
+    public static final double Xki = 0.0;
+    public static final double Xkd = 0.0;
+  }
   
 }

@@ -10,6 +10,7 @@ import frc.robot.commands.FollowAprilTag;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -33,6 +34,7 @@ public class RobotContainer {
 
   private void configureBindings() {
     m_driverController.leftBumper().whileTrue(new RepeatCommand(followAprilTag()));
+    m_driverController.leftBumper().whileFalse(Commands.run(() -> {driveSubsystem.arcadeDrive(0, 0);}));
   }
 
   public FollowAprilTag followAprilTag() {

@@ -2,9 +2,11 @@ package frc.robot.commands;
 
 import org.photonvision.targeting.PhotonTrackedTarget;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
+import frc.robot.utils.AprilTagUtils;
 
 public class FollowAprilTag extends CommandBase {
     private DriveSubsystem driveSubsystem;
@@ -19,18 +21,14 @@ public class FollowAprilTag extends CommandBase {
     @Override
     public void execute() {
         PhotonTrackedTarget target = visionSubsystem.getTarget();
-
         //null or in front
         if(target == null || target.getYaw() == 0) {
-            driveSubsystem.arcadeDrive(0, 0);
+            driveSubsystem.getDrive().stopMotor();
+            return;
         }
-        //right
-        else if(target.getYaw() > 0){
-            driveSubsystem.arcadeDrive(0.45, 0.45);
-        }
-        //left
-        else {
-            driveSubsystem.arcadeDrive(0.45, -0.45);
-        }        
+        double zRotation = AprilTagUtils.getZRotation(target.getYaw());
+        double x = AprilTagUtils.getXAmount(target.getBestCameraToTarget().getX());
+        System.out.println("Z: " + zRotation + " | X: " + x);
+        driveSubsystem.arcadeDrive(x, zRotation);        
     }
 }

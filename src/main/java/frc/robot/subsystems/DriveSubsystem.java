@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
@@ -10,6 +11,9 @@ public class DriveSubsystem extends SubsystemBase {
     private Talon rightDrive = new Talon(1);
 
     private DifferentialDrive drive = new DifferentialDrive(leftDrive, rightDrive);
+    public DifferentialDrive getDrive() {
+        return drive;
+    }
     public DriveSubsystem(){
         rightDrive.setInverted(true);
     }
