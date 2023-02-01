@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.FollowAprilTag;
+import frc.robot.commands.GetAprilTagPose;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -33,6 +34,7 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
+    m_driverController.a().whileTrue(new RepeatCommand(new GetAprilTagPose(visionSubsystem)).asProxy().ignoringDisable(true));
     m_driverController.leftBumper().whileTrue(new RepeatCommand(followAprilTag()));
     m_driverController.leftBumper().whileFalse(Commands.run(() -> {driveSubsystem.arcadeDrive(0, 0);}));
   }

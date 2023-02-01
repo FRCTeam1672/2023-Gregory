@@ -11,11 +11,14 @@ public class VisionSubsystem extends SubsystemBase {
     public PhotonTrackedTarget getTarget() {
         var result = camera.getLatestResult();
 
-        if(!result.hasTargets()) return null;
+        if (!result.hasTargets()) { return null; }
 
         PhotonTrackedTarget target = result.getBestTarget();
+        
         return target;
     }
 
-
+    public PhotonCamera getCamera() {
+        return camera;
+    }
 }
