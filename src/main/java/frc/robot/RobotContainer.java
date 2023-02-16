@@ -10,7 +10,12 @@ import frc.robot.commands.FollowAprilTag;
 import frc.robot.commands.GetAprilTagPose;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
+
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -31,12 +36,13 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+    //ahrs.getDisplacementX();
   }
 
   private void configureBindings() {
-    m_driverController.a().whileTrue(new RepeatCommand(new GetAprilTagPose(visionSubsystem)).asProxy().ignoringDisable(true));
+    new RepeatCommand(new GetAprilTagPose(visionSubsystem)).ignoringDisable(true).schedule();;
     m_driverController.leftBumper().whileTrue(new RepeatCommand(followAprilTag()));
-    m_driverController.leftBumper().whileFalse(Commands.run(() -> {driveSubsystem.arcadeDrive(0, 0);}));
+    
   }
 
   public FollowAprilTag followAprilTag() {
