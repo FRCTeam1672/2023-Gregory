@@ -6,9 +6,11 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
+import frc.robot.commands.BalanceRobot;
 import frc.robot.commands.FollowAprilTag;
 import frc.robot.commands.GetAprilTagPose;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.GyroSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -27,10 +29,12 @@ public class RobotContainer {
       new CommandXboxController(OperatorConstants.driverControllerPort);
 
   // mr segall please give me a good grade on this program
-  private final DriveSubsystem driveSubsystem = new DriveSubsystem();
+  private final DriveSubsystem driveSubsystem = new DriveSubsystem(m_driverController);
 
   // comment
   private final VisionSubsystem visionSubsystem = new VisionSubsystem();
+
+  private final GyroSubsystem gyroSubsystem = new GyroSubsystem();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -40,9 +44,13 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    new RepeatCommand(new GetAprilTagPose(visionSubsystem)).ignoringDisable(true).schedule();;
-    m_driverController.leftBumper().whileTrue(new RepeatCommand(followAprilTag()));
-    
+    //new RepeatCommand(new GetAprilTagPose(visionSubsystem)).ignoringDisable(true).schedule();;
+   //m_driverController.leftBumper().whileTrue(new RepeatCommand(followAprilTag()));
+    m_driverController.rightBumper().whileTrue(new RepeatCommand(balanceRobot()));
+  }
+
+  public BalanceRobot balanceRobot() {
+    return new BalanceRobot(gyroSubsystem, driveSubsystem);
   }
 
   public FollowAprilTag followAprilTag() {

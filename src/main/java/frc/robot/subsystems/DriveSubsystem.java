@@ -6,18 +6,20 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class DriveSubsystem extends SubsystemBase {
     private Talon leftDrive = new Talon(0);
     private Talon rightDrive = new Talon(1);
-    private XboxController driveController = new XboxController(0);
+    private CommandXboxController driveController;
 
     private DifferentialDrive drive = new DifferentialDrive(leftDrive, rightDrive);
     public DifferentialDrive getDrive() {
         return drive;
     }
     
-    public DriveSubsystem(){
+    public DriveSubsystem(CommandXboxController m_driverController){
+        this.driveController = m_driverController;
         rightDrive.setInverted(true);
     }
     

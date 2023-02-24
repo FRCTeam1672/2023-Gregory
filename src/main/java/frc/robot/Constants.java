@@ -25,6 +25,10 @@ public final class Constants {
     public static final double Xkp = 0.3;
     public static final double Xki = 0.0;
     public static final double Xkd = 0.0;
+
+    public static final double Rkp = 1;
+    public static final double Rki = 0.0;
+    public static final double Rkd = 0.0;
   }
   
 }

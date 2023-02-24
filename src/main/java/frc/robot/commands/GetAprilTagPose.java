@@ -31,9 +31,6 @@ public class GetAprilTagPose extends CommandBase {
     private Field2d field = new Field2d();
     private AHRS ahrs = new AHRS(SerialPort.Port.kMXP);
 
-
-
-
     public GetAprilTagPose(VisionSubsystem visionSubsystem) {
         addRequirements(visionSubsystem);
         
@@ -72,9 +69,8 @@ public class GetAprilTagPose extends CommandBase {
             prevEstimatedRobotPose = pose.get().estimatedPose.toPose2d();
             ahrs.resetDisplacement();
         }
-
+        
         else {
-            System.out.println("Pose Not Present!");
             double x = prevEstimatedRobotPose.getX() + ahrs.getDisplacementX();
             double y = prevEstimatedRobotPose.getY() + ahrs.getDisplacementY();
             SmartDashboard.putNumber("X-Displacement", ahrs.getDisplacementX());
