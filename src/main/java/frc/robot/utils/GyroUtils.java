@@ -8,6 +8,8 @@ public class GyroUtils {
     private static PIDController rollController = new PIDController(Constants.PIDConstants.Rkp, Constants.PIDConstants.Rki, Constants.PIDConstants.Rkd);
     
     public static double getRoll(double robotRoll) {
-        return -MathUtil.clamp(rollController.calculate(robotRoll), -0.75, 0.75);
+        if(-20 <= robotRoll && robotRoll <= -15) return -0.75; 
+        if(Math.abs(robotRoll) <= 10) return 0.0;
+        return -MathUtil.clamp(rollController.calculate(robotRoll), -0.53, 0.53);
     }
 }

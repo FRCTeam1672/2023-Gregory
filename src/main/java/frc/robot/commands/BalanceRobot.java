@@ -23,7 +23,7 @@ public class BalanceRobot extends CommandBase {
     @Override
     public void execute() {
         AHRS ahrs = this.gyroSubsystem.getAHRS();
-        SmartDashboard.putNumber("Move Value", GyroUtils.getRoll(ahrs.getRoll()));
+        
         this.driveSubsystem.arcadeDrive(-GyroUtils.getRoll(ahrs.getRoll()), 0);
     }
 }

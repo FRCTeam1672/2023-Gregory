@@ -1,5 +1,8 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -9,8 +12,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class DriveSubsystem extends SubsystemBase {
-    private Talon leftDrive = new Talon(0);
-    private Talon rightDrive = new Talon(1);
+    private VictorSP leftDrive = new VictorSP(0);
+    private VictorSP rightDrive = new VictorSP(1);
     private CommandXboxController driveController;
 
     private DifferentialDrive drive = new DifferentialDrive(leftDrive, rightDrive);
@@ -31,21 +34,12 @@ public class DriveSubsystem extends SubsystemBase {
     public void periodic() {
         double xSpeed = -driveController.getLeftY();
         double zRotation = driveController.getRightX();
-        
-        if(xSpeed > 0.8) {
-            xSpeed = 0.8;
-        }
-        else if(xSpeed < -0.8) {
-            xSpeed = -0.8;
+
+        if(xSpeed == 0.0 && zRotation == 0.0){
+            drive.stopMotor();
+            return;
         }
 
-        if(zRotation > 0.8) {
-            zRotation = 0.8;
-        }
-        else if(zRotation < -0.8) {
-            zRotation = -0.8;
-        }
-
-        arcadeDrive(xSpeed, zRotation);
+        arcadeDrive(MathUtil.clamp(xSpeed, -1, 1), MathUtil.clamp(zRotation, -0.9, 0.9));
     }
 }
