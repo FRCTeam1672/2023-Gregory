@@ -13,6 +13,7 @@ import frc.robot.utils.GyroUtils;
 public class BalanceRobot extends CommandBase {
     private GyroSubsystem gyroSubsystem;
     private DriveSubsystem driveSubsystem;
+    private int finished = 0;
 
     public BalanceRobot(GyroSubsystem gyroSubsystem, DriveSubsystem driveSubsystem) {
         addRequirements(gyroSubsystem);
@@ -22,8 +23,20 @@ public class BalanceRobot extends CommandBase {
 
     @Override
     public void execute() {
+        System.out.println("balanceing");
+        SmartDashboard.putBoolean("Balanceing", true);
         AHRS ahrs = this.gyroSubsystem.getAHRS();
-        
-        this.driveSubsystem.arcadeDrive(-GyroUtils.getRoll(ahrs.getRoll()), 0);
+        double xSpeed = -GyroUtils.getRoll(ahrs.getRoll());
+        if(xSpeed == 0.0){
+            finished++;
+        }
+        else{
+            finished = 0;
+        }
+        this.driveSubsystem.arcadeDrive(xSpeed, 0);
+    }
+    @Override
+    public void end(boolean interrupted) {
+        SmartDashboard.putBoolean("Balanceing", false);
     }
 }

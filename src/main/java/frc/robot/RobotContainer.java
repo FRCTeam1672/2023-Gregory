@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.BalanceRobot;
+import frc.robot.commands.DriveRobotToChargeStation;
 import frc.robot.commands.FollowAprilTag;
 import frc.robot.commands.GetAprilTagPose;
 import frc.robot.subsystems.DriveSubsystem;
@@ -46,11 +47,13 @@ public class RobotContainer {
   private void configureBindings() {
     //new RepeatCommand(new GetAprilTagPose(visionSubsystem)).ignoringDisable(true).schedule();;
    //m_driverController.leftBumper().whileTrue(new RepeatCommand(followAprilTag()));
-    m_driverController.rightBumper().whileTrue(new RepeatCommand(balanceRobot()));
+    m_driverController.rightBumper().whileTrue(
+      new DriveRobotToChargeStation(driveSubsystem, gyroSubsystem).andThen(new BalanceRobot(gyroSubsystem, driveSubsystem))
+    );
   }
 
-  public BalanceRobot balanceRobot() {
-    return new BalanceRobot(gyroSubsystem, driveSubsystem);
+  public Command balanceRobot() {
+    return new DriveRobotToChargeStation(driveSubsystem, gyroSubsystem).andThen(new BalanceRobot(gyroSubsystem, driveSubsystem));
   }
 
   public FollowAprilTag followAprilTag() {
