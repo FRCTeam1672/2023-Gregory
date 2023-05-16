@@ -1,5 +1,7 @@
 package frc.robot.commands;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,7 +30,7 @@ public class DriveRobotToChargeStation extends CommandBase {
     public void execute() {
         System.out.println("Drive Up");
         System.out.println("is on charge station: " + isOnChargeStation );
-        SmartDashboard.putBoolean("Driving Up", true);
+        Logger.getInstance().recordOutput("Driving Up", true);
         if(gryo.getRoll() <= -10){
             isDrivingUp = true;
             drive.arcadeDrive(0.85, 0);
@@ -47,7 +49,7 @@ public class DriveRobotToChargeStation extends CommandBase {
     }
     @Override
     public void end(boolean interrupted) {
-        SmartDashboard.putBoolean("Driving Up", false);
+        Logger.getInstance().recordOutput("Driving Up", false);
     }
     
 }

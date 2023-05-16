@@ -2,6 +2,7 @@ package frc.robot.commands;
 import java.io.IOException;
 import java.util.Optional;
 
+import org.littletonrobotics.junction.Logger;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
@@ -42,9 +43,7 @@ public class GetAprilTagPose extends CommandBase {
         
         catch (IOException e) {
             e.printStackTrace();
-        }
-
-        SmartDashboard.putData("Field", field);
+        };
 
 
         //Forward Camera
@@ -73,14 +72,14 @@ public class GetAprilTagPose extends CommandBase {
         else {
             double x = prevEstimatedRobotPose.getX() + ahrs.getDisplacementX();
             double y = prevEstimatedRobotPose.getY() + ahrs.getDisplacementY();
-            SmartDashboard.putNumber("X-Displacement", ahrs.getDisplacementX());
-            SmartDashboard.putNumber("Y-Displacement", ahrs.getDisplacementY());
+            Logger.getInstance().recordOutput("X-Displacement", ahrs.getDisplacementX());
+            Logger.getInstance().recordOutput("Y-Displacement", ahrs.getDisplacementY());
             ahrs.getRotation2d();
             double rotation = ahrs.getFusedHeading();
-            SmartDashboard.putNumber("Raw  Rotation", rotation);
-            SmartDashboard.putNumber("Rotation-Modified", rotation + 90);   
+            Logger.getInstance().recordOutput("Raw  Rotation", rotation);
+            Logger.getInstance().recordOutput("Rotation-Modified", rotation + 90);   
             Pose2d navXPose2d = new Pose2d(x, y, new Rotation2d(Math.toRadians(rotation)));
-            field.setRobotPose(navXPose2d);
+            Logger.getInstance().recordOutput("Robot", navXPose2d);
         }
     }
 

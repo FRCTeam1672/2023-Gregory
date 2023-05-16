@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -19,9 +21,9 @@ public class GyroSubsystem extends SubsystemBase {
     }
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Other Gryo", gryo.getAngle());
-        SmartDashboard.putNumber("Gyro Roll",ahrs.getRoll());
-        SmartDashboard.putNumber("Roll Value", GyroUtils.getRoll(ahrs.getRoll()));
+        Logger.getInstance().recordOutput("Other Gryo", gryo.getAngle());
+        Logger.getInstance().recordOutput("Gyro Roll",ahrs.getRoll());
+        Logger.getInstance().recordOutput("Roll Value", GyroUtils.getRoll(ahrs.getRoll()));
     }
 
     public AHRS getAHRS() {

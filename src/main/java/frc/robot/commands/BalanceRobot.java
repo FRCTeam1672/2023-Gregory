@@ -1,5 +1,7 @@
 package frc.robot.commands;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -24,7 +26,7 @@ public class BalanceRobot extends CommandBase {
     @Override
     public void execute() {
         System.out.println("balanceing");
-        SmartDashboard.putBoolean("Balanceing", true);
+        Logger.getInstance().recordOutput("Balanceing", true);
         AHRS ahrs = this.gyroSubsystem.getAHRS();
         double xSpeed = -GyroUtils.getRoll(ahrs.getRoll());
         if(xSpeed == 0.0){
@@ -37,6 +39,6 @@ public class BalanceRobot extends CommandBase {
     }
     @Override
     public void end(boolean interrupted) {
-        SmartDashboard.putBoolean("Balanceing", false);
+        Logger.getInstance().recordOutput("Balanceing", false);
     }
 }
