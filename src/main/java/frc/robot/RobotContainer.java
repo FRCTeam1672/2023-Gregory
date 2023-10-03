@@ -5,32 +5,23 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
 import frc.robot.commands.BalanceRobot;
 import frc.robot.commands.DriveRobotToChargeStation;
 import frc.robot.commands.FollowAprilTag;
-import frc.robot.commands.GetAprilTagPose;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.GyroSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
-import com.kauailabs.navx.frc.AHRS;
-
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
+  private final CommandXboxController controller =
       new CommandXboxController(OperatorConstants.driverControllerPort);
 
   // mr segall please give me a good grade on this program
-  private final DriveSubsystem driveSubsystem = new DriveSubsystem(m_driverController);
+  private final DriveSubsystem driveSubsystem = new DriveSubsystem(controller);
 
   // comment
   private final VisionSubsystem visionSubsystem = new VisionSubsystem();
@@ -47,9 +38,11 @@ public class RobotContainer {
   private void configureBindings() {
     //new RepeatCommand(new GetAprilTagPose(visionSubsystem)).ignoringDisable(true).schedule();;
    //m_driverController.leftBumper().whileTrue(new RepeatCommand(followAprilTag()));
-    m_driverController.rightBumper().whileTrue(
+    controller.rightBumper().whileTrue(
       new DriveRobotToChargeStation(driveSubsystem, gyroSubsystem).andThen(new BalanceRobot(gyroSubsystem, driveSubsystem))
+
     );
+
   }
 
   public Command balanceRobot() {
